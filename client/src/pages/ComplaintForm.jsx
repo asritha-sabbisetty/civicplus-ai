@@ -5,16 +5,35 @@ function ComplaintForm() {
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
     const [image, setImage] = useState(null);
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log({
+        const complaint = {
             title,
             category,
-            location,
             description,
-            image,
-        });
+            location,
+            image: "",
+        };
+
+        try {
+            const response = await fetch("http://localhost:5000/complaints", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(complaint),
+            });
+
+            const data = await response.json();
+
+            console.log(data);
+
+            alert("Complaint submitted successfully!");
+        } catch (error) {
+            console.error(error);
+            alert("Failed to submit complaint.");
+        }
     };
     return (
         <div className="min-h-screen bg-gray-100 flex justify-center items-center">
