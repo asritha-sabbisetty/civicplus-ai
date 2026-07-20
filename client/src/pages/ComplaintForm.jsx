@@ -7,13 +7,32 @@ function ComplaintForm() {
     const [image, setImage] = useState(null);
     const handleSubmit = async (e) => {
         e.preventDefault();
+        let imageUrl = "";
 
+        if (image) {
+            const formData = new FormData();
+
+            formData.append("file", image);
+            formData.append("upload_preset", "civicplus-ai");
+
+            const cloudinaryResponse = await fetch(
+                "https://api.cloudinary.com/v1_1/japywtys/image/upload",
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            );
+
+            const cloudinaryData = await cloudinaryResponse.json();
+
+            imageUrl = cloudinaryData.secure_url;
+        }
         const complaint = {
             title,
             category,
             description,
             location,
-            image: "",
+            image: imageUrl,
         };
 
         try {
