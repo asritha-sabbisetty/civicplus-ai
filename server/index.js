@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import Complaint from "./models/Complaint.js";
+import ai from "./gemini.js";
 
 
 dotenv.config();
@@ -50,6 +51,24 @@ app.post("/complaints", async (req, res) => {
         res.status(500).json({
             message: "Error submitting complaint",
             error: error.message,
+        });
+    }
+});
+
+app.get("/ai-test", async (req, res) => {
+    try {
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: "Say hello in one sentence.",
+        });
+
+        res.json({
+            reply: response.text,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: "Gemini test failed",
         });
     }
 });
