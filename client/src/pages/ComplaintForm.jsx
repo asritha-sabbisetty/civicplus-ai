@@ -4,6 +4,7 @@ function ComplaintForm() {
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
+    const [image, setImage] = useState(null);
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -12,6 +13,7 @@ function ComplaintForm() {
             category,
             location,
             description,
+            image,
         });
     };
     return (
@@ -53,7 +55,7 @@ function ComplaintForm() {
                             htmlFor="imageUpload"
                             className="block w-full border border-gray-300 rounded-lg p-3 text-gray-500 cursor-pointer hover:border-blue-600"
                         >
-                            📷 Upload Image
+                            {image ? image.name : "📷 Upload Image"}
                         </label>
 
                         <input
@@ -61,6 +63,7 @@ function ComplaintForm() {
                             type="file"
                             accept="image/*"
                             className="hidden"
+                            onChange={(e) => setImage(e.target.files[0])}
                         />
                     </div>
                     <input
