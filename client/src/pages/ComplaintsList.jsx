@@ -23,6 +23,13 @@ function ComplaintsList() {
                         className="border rounded-lg p-4 mb-4 shadow"
                     >
                         <h2 className="text-xl font-semibold">{complaint.title}</h2>
+                        {complaint.image && (
+                            <img
+                                src={complaint.image}
+                                alt={complaint.title}
+                                className="w-full h-64 object-cover rounded-lg my-3"
+                            />
+                        )}
                         <p><strong>Category:</strong> {complaint.category}</p>
                         <p><strong>Description:</strong> {complaint.description}</p>
                         <p><strong>Location:</strong> {complaint.location}</p>
