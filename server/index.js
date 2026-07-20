@@ -23,6 +23,19 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
+app.get("/complaints", async (req, res) => {
+    try {
+        const complaints = await Complaint.find();
+
+        res.status(200).json(complaints);
+    } catch (error) {
+        res.status(500).json({
+            message: "Error fetching complaints",
+            error: error.message,
+        });
+    }
+});
+
 app.post("/complaints", async (req, res) => {
     try {
         const complaint = new Complaint(req.body);
